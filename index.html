@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#55406f">
+<title>Hipófise em Foco</title>
+<style>
+:root{--navy:#55406f;--teal:#8a6bb1;--paper:#ffffff;--ink:#382d45;--muted:#756b80;--line:#e5dced}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:22px 18px 25px}.wrap{max-width:900px;margin:auto}
+.brand{font-size:12px;letter-spacing:1.5px;color:#b9e6e8;font-weight:bold}h1{font-size:29px;line-height:1.15;margin:8px 0}header p{margin:0;color:#e1eff1}
+main{max-width:900px;margin:auto;padding:18px}.notice{background:#f7f2fb;border:1px solid #e2d5ef;border-radius:12px;padding:13px 14px;font-size:14px;margin-bottom:17px}
+.search{width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font-size:16px;background:#fff;margin-bottom:14px}
+.nav{display:flex;gap:8px;overflow:auto;padding:2px 0 12px}.nav button{white-space:nowrap;border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:22px;padding:9px 13px;font-weight:600}.nav button.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;margin:10px 0;box-shadow:0 2px 8px #123d5209}h2{color:var(--navy);font-size:21px;margin:0 0 10px}h3{color:var(--teal);font-size:17px;margin:18px 0 6px}p{margin:8px 0}ul{padding-left:21px}.item{border-top:1px solid var(--line);padding:12px 0}.item:first-child{border-top:0}.term{font-weight:bold;color:var(--navy)}.muted{color:var(--muted);font-size:13px}.emergency{border-left:5px solid #bd5a45}footer{text-align:center;color:var(--muted);font-size:12px;padding:22px}
+@media(min-width:650px){h1{font-size:36px}main{padding:24px}}
+
+.anatomy-panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0}
+.anatomy-panel h2{margin-bottom:6px}
+.anatomy-intro{color:var(--muted);font-size:14px}
+.anatomy-svg{display:block;width:100%;max-width:560px;height:auto;margin:12px auto;background:#f8f5fb;border-radius:12px}
+.anatomy-svg text{font-family:Arial,sans-serif;fill:#183642;font-size:12px;font-weight:bold}
+.anatomy-svg .hotspot{cursor:pointer;outline:none}
+.anatomy-svg .hotspot circle{stroke:#fff;stroke-width:3;transition:transform .15s}
+.anatomy-svg .hotspot:focus circle,.anatomy-svg .hotspot:hover circle{stroke:#d18b00;stroke-width:5}
+.anatomy-controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.anatomy-controls button{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:20px;padding:9px 12px;font-weight:600}
+.anatomy-controls button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.anatomy-detail{background:#f5effa;border-left:4px solid var(--teal);border-radius:9px;padding:13px;margin-top:10px;min-height:110px}
+.anatomy-detail h3{margin:0 0 5px}
+.anatomy-caption{font-size:12px;color:var(--muted);text-align:center}
+
+
+.simulator{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0}
+.simulator .sim-controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.simulator button{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:22px;padding:10px 13px;font-weight:600}
+.simulator button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+.sim-svg{display:block;width:100%;height:auto;max-width:560px;margin:10px auto;background:#f8f5fb;border-radius:12px}
+.sim-svg text{font-family:Arial,sans-serif;fill:#183642;font-size:12px;font-weight:bold}
+.sim-description{background:#f5effa;border-left:4px solid var(--teal);padding:13px;border-radius:9px}
+.sim-warning{background:#fff8e8;border:1px solid #ecd9a8;padding:12px;border-radius:10px;font-size:14px}
+
+
+.assistant-panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:16px 0}
+.assistant-intro{color:var(--muted);font-size:14px}
+.assistant-categories,.assistant-questions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.assistant-panel button{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:20px;padding:9px 12px;font-weight:600}
+.assistant-panel button.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.assistant-answer{background:#f5effa;border-left:4px solid var(--teal);border-radius:9px;padding:14px;margin-top:12px;min-height:90px}
+.assistant-answer h3{margin:0 0 6px}
+.assistant-search{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;font-size:16px;margin:8px 0}
+.assistant-results .item{padding:10px 0}
+.assistant-small{font-size:12px;color:var(--muted)}
+
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="brand">INFORMAÇÃO • CONHECIMENTO • ACOLHIMENTO</div><h1>Hipófise em Foco</h1><p>Conhecimento que acolhe. Informação que transforma.</p></div></header>
+<main>
+<div class="notice"><strong>Importante:</strong> este aplicativo oferece informação educativa. Não substitui consulta, diagnóstico, interpretação individual de exames ou orientação de profissionais de saúde.</div>
+
+<section class="anatomy-panel" aria-labelledby="anatomy-title">
+  <h2 id="anatomy-title">Anatomia interativa da região hipofisária</h2>
+  <p class="anatomy-intro">Toque em uma estrutura no desenho ou nos botões para conhecer sua função e sua relação com os tumores da hipófise.</p>
+  <svg class="anatomy-svg" viewBox="0 0 520 330" role="img" aria-label="Esquema simplificado da região hipofisária, com hipotálamo, hipófise, quiasma óptico, nervos ópticos e seio cavernoso">
+    <path d="M65 170 C72 70 180 32 300 55 C390 72 455 130 442 211 C428 280 345 300 245 284 C145 269 75 240 65 170Z" fill="#e5d8c9" stroke="#bca995" stroke-width="3"/>
+    <path d="M185 86 C205 65 250 62 278 80 C294 92 300 112 291 128 C276 145 236 145 211 129Z" fill="#d9a65c" stroke="#a97735" stroke-width="2"/>
+    <path d="M244 133 C242 148 239 158 237 171" stroke="#a97735" stroke-width="10" stroke-linecap="round"/>
+    <path d="M211 172 Q238 150 265 172 Q278 190 263 208 Q238 226 213 208 Q198 190 211 172Z" fill="#d98791" stroke="#a84f62" stroke-width="3"/>
+    <path d="M205 164 Q238 145 271 164" fill="none" stroke="#23869a" stroke-width="9" stroke-linecap="round"/>
+    <path d="M205 164 L122 135 M271 164 L354 135" stroke="#23869a" stroke-width="8" stroke-linecap="round"/>
+    <path d="M194 172 C170 174 160 199 174 218 C187 233 204 227 211 211" fill="none" stroke="#b36a36" stroke-width="7"/>
+    <path d="M282 172 C306 174 316 199 302 218 C289 233 272 227 265 211" fill="none" stroke="#b36a36" stroke-width="7"/>
+    <path d="M239 170 L239 213" stroke="#a84f62" stroke-width="2" stroke-dasharray="3 4"/>
+    <text x="25" y="28">Esquema ilustrativo (não está em escala)</text>
+    <g class="hotspot" data-part="hypothalamus" tabindex="0" role="button" aria-label="Hipotálamo"><circle cx="246" cy="105" r="12" fill="#d9a65c"/><text x="306" y="91">Hipotálamo</text></g>
+    <g class="hotspot" data-part="pituitary" tabindex="0" role="button" aria-label="Hipófise"><circle cx="239" cy="190" r="12" fill="#d98791"/><text x="306" y="197">Hipófise</text></g>
+    <g class="hotspot" data-part="chiasm" tabindex="0" role="button" aria-label="Quiasma óptico"><circle cx="239" cy="164" r="12" fill="#23869a"/><text x="306" y="158">Quiasma óptico</text></g>
+    <g class="hotspot" data-part="nerves" tabindex="0" role="button" aria-label="Nervos ópticos"><circle cx="153" cy="146" r="10" fill="#23869a"/><text x="18" y="119">Nervos ópticos</text></g>
+    <g class="hotspot" data-part="cavernous" tabindex="0" role="button" aria-label="Seios cavernosos"><circle cx="190" cy="195" r="10" fill="#b36a36"/><circle cx="288" cy="195" r="10" fill="#b36a36"/><text x="306" y="235">Seios cavernosos</text></g>
+  </svg>
+  <p class="anatomy-caption">Representação didática simplificada. A anatomia real é tridimensional e varia entre pessoas.</p>
+  <div class="anatomy-controls" id="anatomy-controls">
+    <button type="button" data-part="hypothalamus">Hipotálamo</button>
+    <button type="button" data-part="pituitary" class="active">Hipófise</button>
+    <button type="button" data-part="chiasm">Quiasma óptico</button>
+    <button type="button" data-part="nerves">Nervos ópticos</button>
+    <button type="button" data-part="cavernous">Seios cavernosos</button>
+  </div>
+  <div class="anatomy-detail" id="anatomy-detail" aria-live="polite">
+    <h3>Hipófise</h3>
+    <p>Pequena glândula localizada na base do cérebro, na sela túrcica. Produz ou libera hormônios que participam do controle de outras glândulas e de funções importantes do organismo. Tumores nessa região podem alterar a produção hormonal ou comprimir estruturas próximas.</p>
+  </div>
+  <div class="notice"><strong>Entenda a relação com a visão:</strong> quando uma lesão cresce para cima, pode tocar ou comprimir o quiasma óptico. Isso pode causar perda de campo visual, muitas vezes nas regiões laterais. Nem todo tumor causa alteração visual; a avaliação depende da ressonância, dos exames oftalmológicos e da equipe médica.</div>
+</section>
+
+
+<section class="simulator" aria-labelledby="sim-title">
+ <h2 id="sim-title">Simulador educativo: crescimento do macroadenoma</h2>
+ <p class="anatomy-intro">Selecione uma situação para visualizar, de forma esquemática, como uma lesão na hipófise pode se relacionar com as estruturas próximas.</p>
+ <div class="sim-controls" role="group" aria-label="Situações ilustrativas">
+  <button type="button" class="active" data-state="normal">Sem aumento tumoral</button>
+  <button type="button" data-state="growth">Crescimento superior</button>
+  <button type="button" data-state="contact">Contato/compressão do quiasma</button>
+ </div>
+ <svg class="sim-svg" viewBox="0 0 520 300" role="img" aria-label="Esquema didático da hipófise, tumor e quiasma óptico">
+  <path d="M60 150 Q75 35 250 40 Q435 40 460 150 Q440 265 250 265 Q75 265 60 150Z" fill="#e5d8c9" stroke="#bca995" stroke-width="3"/>
+  <path d="M245 82 L245 148" stroke="#b9874a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M205 148 Q245 130 285 148" fill="none" stroke="#23869a" stroke-width="10" stroke-linecap="round"/>
+  <path d="M205 148 L130 122 M285 148 L360 122" stroke="#23869a" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="245" cy="180" rx="30" ry="24" fill="#d98791" stroke="#a84f62" stroke-width="3"/>
+  <g id="sim-tumor"><ellipse cx="245" cy="180" rx="0" ry="0" fill="#b95c48" stroke="#853b32" stroke-width="3"/></g>
+  <path id="sim-arrow" d="" fill="none" stroke="#b95c48" stroke-width="3" stroke-dasharray="6 5"/>
+  <text x="20" y="24">Vista esquemática — não representa escala ou anatomia individual</text>
+  <text x="370" y="115">Quiasma óptico</text><text x="310" y="210">Hipófise</text>
+ </svg>
+ <div class="sim-description" id="sim-description" aria-live="polite">
+  <strong>Sem aumento tumoral ilustrado</strong>
+  <p>O desenho mostra a hipófise sem uma massa aumentada. Isso é apenas uma referência visual educativa; não substitui a avaliação de uma ressonância.</p>
+ </div>
+ <p class="sim-warning"><strong>Importante:</strong> nem todo macroadenoma comprime o quiasma óptico. A direção de crescimento, a anatomia individual e a relação da lesão com as estruturas vizinhas variam. A avaliação é feita pela equipe médica com ressonância e, quando indicada, campimetria e exame oftalmológico. O simulador não prevê perda visual nem indica tratamento.</p>
+</section>
+
+<input id="search" class="search" type="search" placeholder="Buscar assunto, sintoma ou termo..." aria-label="Buscar conteúdo">
+<nav id="nav" class="nav" aria-label="Seções do aplicativo"></nav>
+<section id="content"><div class="card">Preparando conteúdo educativo...</div></section>
+
+<section class="assistant-panel" id="assistente" aria-labelledby="assistant-title">
+<h2 id="assistant-title">Assistente educativo</h2>
+<p class="assistant-intro">Este assistente usa respostas educativas previamente organizadas, sem inteligência artificial. Escolha um assunto e toque em uma pergunta; você também pode pesquisar palavras ou expressões.</p>
+<div class="assistant-categories" id="assistant-categories" role="group" aria-label="Assuntos do assistente">
+<button type="button" class="active" data-category="geral">Geral</button>
+<button type="button" data-category="visao">Visão</button>
+<button type="button" data-category="exames">Exames</button>
+<button type="button" data-category="tratamento">Tratamentos</button>
+<button type="button" data-category="cirurgia">Cirurgia</button>
+<button type="button" data-category="apoio">Acolhimento</button>
+</div>
+<div class="assistant-questions" id="assistant-questions"></div>
+<div class="assistant-answer" id="assistant-answer" aria-live="polite">
+<h3>Como usar o assistente</h3>
+<p>Selecione um assunto e uma pergunta. As respostas vêm do conteúdo educativo deste aplicativo e não são geradas por inteligência artificial.</p>
+</div>
+<h3>Pesquisar no conteúdo</h3>
+<input class="assistant-search" id="assistant-search" type="search" placeholder="Ex.: macroadenoma, quiasma, prolactina..." aria-label="Pesquisar no conteúdo do assistente">
+<div class="assistant-results" id="assistant-results" aria-live="polite"></div>
+<p class="assistant-small">Este recurso funciona sem IA e sem enviar suas perguntas para um servidor. Não substitui avaliação médica.</p>
+</section>
+
+
+
+
+<section class="card" id="fontes" aria-labelledby="sources-title">
+<h2 id="sources-title">Fontes de referência</h2>
+<p>As informações deste aplicativo são educativas. As fontes abaixo ajudam a fundamentar a revisão, mas não substituem avaliação clínica individual.</p>
+<ul>
+<li><a href="https://www.nature.com/articles/s41574-025-01134-8" target="_blank" rel="noopener">Pituitary Society — consenso internacional sobre incidentalomas hipofisários (2025)</a>.</li>
+<li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5314810/" target="_blank" rel="noopener">Society for Endocrinology — orientação de emergência para apoplexia hipofisária</a>.</li>
+<li><a href="https://doi.org/10.1016/j.eprac.2025.06.018" target="_blank" rel="noopener">Postoperative Considerations Following Pituitary Surgery: A Guide for Clinicians (2025)</a>.</li>
+<li><a href="https://www.cuh.nhs.uk/patient-information/going-home-following-removal-of-a-pituitary-tumour/" target="_blank" rel="noopener">Cambridge University Hospitals — orientações após remoção de tumor hipofisário (atualização de 2026)</a>.</li>
+<li><a href="https://pubmed.ncbi.nlm.nih.gov/37670148/" target="_blank" rel="noopener">Pituitary Society — consenso sobre diagnóstico e manejo de prolactinomas (2023)</a>.</li>
+</ul>
+<p class="assistant-small"><strong>Status editorial:</strong> revisão técnica do aplicativo realizada; conteúdo médico ainda precisa de validação por endocrinologista, neurocirurgião e oftalmologista/neuro-oftalmologista antes da divulgação pública.</p>
+</section>
+
+<section class="card emergency"><h2>Quando procurar atendimento imediatamente</h2><p>Procure um serviço de emergência diante de dor de cabeça súbita e muito intensa, perda ou piora súbita da visão, visão dupla nova, desmaio, confusão ou vômitos persistentes associados a dor intensa. Não espere uma resposta do aplicativo.</p></section>
+</main><footer>Hipófise em Foco • Conteúdo educativo • Consulte sempre sua equipe de saúde.</footer>
+<script>
+const database = {"app": {"name": "Hipófise em Foco", "version": "1.0.0", "language": "pt-BR", "content_type": "educacao_em_saude", "last_reviewed": "2026-11-11", "audience": ["pacientes", "familiares", "estudantes", "profissionais de saude", "publico geral"], "mission": "Oferecer informação confiável, acessível e acolhedora sobre a hipófise e seus tumores, apoiando pacientes e familiares durante o diagnóstico, tratamento e acompanhamento.", "disclaimer": "Conteúdo educativo. Não substitui consulta, diagnóstico, interpretação individual de exames, prescrição ou orientação de endocrinologista, neurocirurgião, oftalmologista ou outro profissional habilitado. Condutas variam conforme cada pessoa."}, "emergency_alert": {"title": "Quando procurar atendimento imediatamente", "text": "Procure um serviço de emergência diante de dor de cabeça súbita e muito intensa, especialmente se diferente das habituais, perda ou piora súbita da visão, visão dupla nova, queda da pálpebra, vômitos persistentes associados a dor intensa, desmaio, confusão, fraqueza importante ou alteração do nível de consciência. Esses sinais podem ter várias causas, mas em alguém com lesão hipofisária precisam de avaliação urgente, inclusive para descartar apoplexia hipofisária.", "action": "Não espere uma resposta do aplicativo ou do assistente virtual. Acione o serviço de emergência local."}, "sections": [{"id": "hipofise", "title": "Conhecendo a hipófise", "summary": "A hipófise é uma pequena glândula localizada na base do cérebro, em uma cavidade óssea chamada sela túrcica.", "content": ["A hipófise, também chamada glândula pituitária, participa do controle de várias funções do organismo por meio da produção e liberação de hormônios.", "Ela se comunica com o hipotálamo e influencia outras glândulas, como a tireoide, as suprarrenais e os ovários ou testículos.", "Entre os hormônios relacionados à hipófise estão ACTH, TSH, prolactina, GH, LH e FSH. A parte posterior da hipófise armazena e libera ocitocina e vasopressina, hormônios produzidos no hipotálamo.", "Acima da hipófise passam estruturas importantes para a visão, especialmente os nervos ópticos e o quiasma óptico. Por isso, algumas lesões que crescem para cima podem afetar o campo visual."], "terms": [{"term": "Sela túrcica", "definition": "Estrutura óssea na base do crânio onde a hipófise está localizada."}, {"term": "Hipotálamo", "definition": "Região cerebral que regula funções hormonais e se comunica com a hipófise."}, {"term": "Quiasma óptico", "definition": "Região onde parte das fibras dos nervos ópticos se cruza; fica próxima à hipófise."}]}, {"id": "tumores", "title": "O que são tumores da hipófise?", "summary": "São crescimentos anormais de células na região da hipófise. A maioria das lesões hipofisárias é benigna, mas pode causar alterações hormonais ou compressão de estruturas próximas.", "content": ["Muitos tumores originados nas células da hipófise são chamados adenomas hipofisários. A nomenclatura atual também utiliza o termo PitNET (tumor neuroendócrino da hipófise) em determinados contextos.", "A maioria é não cancerosa e não produz metástases. Mesmo assim, uma lesão benigna pode causar problemas por produzir hormônios em excesso, reduzir a produção hormonal normal ou pressionar estruturas próximas.", "Carcinomas hipofisários são extremamente raros. Nem todo tumor grande é câncer e o tamanho, isoladamente, não define malignidade.", "Algumas lesões da região selar não são adenomas, como cistos e outros tumores. O diagnóstico depende da avaliação clínica, hormonal e radiológica, e em alguns casos de análise anatomopatológica."], "size_classification": [{"name": "Microadenoma", "definition": "Lesão com diâmetro máximo menor que 10 mm."}, {"name": "Macroadenoma", "definition": "Lesão com diâmetro máximo igual ou maior que 10 mm."}, {"name": "Tumor gigante", "definition": "Termo usado em alguns contextos para lesões muito grandes, frequentemente acima de 40 mm; a definição pode variar entre estudos e serviços."}], "important_note": "O tamanho não determina sozinho a gravidade. Localização, crescimento, produção hormonal, relação com o quiasma óptico, sintomas e função da hipófise também são importantes."}, {"id": "classificacao", "title": "Principais tipos funcionantes", "content": [{"name": "Prolactinoma", "hormone": "Prolactina", "explanation": "Produz prolactina em excesso. Pode causar irregularidade ou ausência menstrual, saída de leite pelas mamas fora da amamentação, infertilidade, redução da libido e, em homens, disfunção sexual. O tratamento frequentemente começa com medicamentos agonistas dopaminérgicos, como cabergolina ou bromocriptina, sob prescrição e acompanhamento médico."}, {"name": "Adenoma produtor de GH", "hormone": "Hormônio do crescimento", "explanation": "Pode causar acromegalia em adultos, com aumento progressivo de mãos e pés, alterações faciais, suor excessivo, dores articulares e alterações metabólicas. Em crianças antes do fechamento das cartilagens de crescimento pode causar crescimento excessivo."}, {"name": "Adenoma produtor de ACTH", "hormone": "ACTH", "explanation": "Pode provocar doença de Cushing, com excesso de cortisol. Possíveis manifestações incluem ganho de peso central, fraqueza muscular, pressão alta, alterações de glicose, hematomas fáceis e alterações de humor. A avaliação é especializada."}, {"name": "Adenoma produtor de TSH", "hormone": "TSH", "explanation": "É raro e pode estimular a tireoide, levando a sinais de excesso de hormônios tireoidianos, como palpitações, tremores, intolerância ao calor e perda de peso."}, {"name": "Adenoma gonadotrófico", "hormone": "FSH e/ou LH", "explanation": "Muitos são clinicamente não funcionantes, embora possam apresentar alterações hormonais ou efeitos de massa. A interpretação depende dos exames e do contexto clínico."}, {"name": "Adenoma clinicamente não funcionante", "hormone": "Sem síndrome clínica evidente de excesso hormonal", "explanation": "Não causa sinais típicos de excesso de um hormônio. Pode ser descoberto incidentalmente ou por sintomas relacionados ao tamanho, como alterações visuais, cefaleia ou deficiência de hormônios hipofisários."}]}, {"id": "sintomas", "title": "Sintomas e sinais possíveis", "content": ["Os sintomas dependem do tipo de tumor, dos hormônios envolvidos, do tamanho e da direção de crescimento. Algumas pessoas não apresentam sintomas e descobrem a lesão em um exame feito por outro motivo.", "Alterações hormonais podem incluir irregularidade menstrual, infertilidade, redução da libido, alterações de crescimento, mudanças de peso, fraqueza, alterações de pressão arterial, intolerância ao frio ou calor e alterações metabólicas.", "Quando a lesão pressiona estruturas próximas, podem ocorrer dor de cabeça, perda de parte do campo visual, redução da acuidade visual, visão dupla ou alterações dos movimentos dos olhos.", "A dor de cabeça é comum na população e não significa, isoladamente, que exista tumor ou crescimento tumoral. Deve ser avaliada no contexto clínico."], "visual_effects": ["Uma lesão que cresce para cima pode tocar ou comprimir o quiasma óptico.", "A compressão do quiasma pode causar perda de visão periférica, frequentemente dos lados externos do campo visual, mas o padrão varia.", "Nem toda lesão hipofisária causa perda visual. A proximidade com o quiasma e os resultados do exame oftalmológico ajudam a estimar o risco.", "Alteração visual nova ou progressiva exige avaliação médica sem demora."]}, {"id": "diagnostico", "title": "Como é feito o diagnóstico?", "content": ["A avaliação costuma reunir história clínica, exame físico, exames hormonais, ressonância magnética direcionada à hipófise e avaliação visual quando indicada.", "A ressonância magnética é o principal exame de imagem para caracterizar a região hipofisária. O protocolo pode incluir imagens finas nos planos coronal e sagital, sequências T1 antes e depois do contraste e sequências T2, conforme indicação e protocolo do serviço.", "O contraste à base de gadolínio pode ajudar a caracterizar a lesão, mas a decisão depende de fatores clínicos, contraindicações e avaliação médica.", "A tomografia computadorizada pode ser útil em situações específicas, mas geralmente oferece menos detalhes dos tecidos moles da hipófise do que a ressonância.", "A campimetria avalia o campo visual. É especialmente importante quando a lesão encosta ou comprime os nervos ópticos ou o quiasma, ou quando há queixas visuais.", "A avaliação oftalmológica pode incluir acuidade visual, fundo de olho, motilidade ocular e outros exames, conforme o caso."], "hormone_tests": [{"test": "Prolactina", "purpose": "Investigar excesso de prolactina; resultados podem exigir interpretação considerando medicamentos, estresse, hipotireoidismo e outras condições."}, {"test": "IGF-1", "purpose": "Triagem bioquímica para excesso de GH; resultados devem ser interpretados por idade e contexto clínico."}, {"test": "Cortisol e avaliação do eixo ACTH", "purpose": "Investigar excesso ou deficiência de cortisol com testes escolhidos pelo endocrinologista."}, {"test": "TSH e T4 livre", "purpose": "Avaliar o eixo tireoidiano; em doença hipofisária, T4 livre é especialmente importante."}, {"test": "LH, FSH e hormônios sexuais", "purpose": "Avaliar a função reprodutiva conforme sexo, idade, ciclo menstrual e situação clínica."}, {"test": "Sódio e avaliação de água/urina", "purpose": "Podem ser necessários quando há suspeita de alteração da regulação da água, como diabetes insipidus."}], "report_terms": [{"term": "Extensão suprasselar", "meaning": "Crescimento da lesão para cima, além da sela túrcica."}, {"term": "Contato com o quiasma", "meaning": "A lesão toca o quiasma óptico; contato não significa necessariamente compressão ou perda visual."}, {"term": "Compressão do quiasma", "meaning": "A lesão exerce pressão sobre a estrutura visual; requer correlação com exame oftalmológico."}, {"term": "Invasão do seio cavernoso", "meaning": "Extensão para uma região lateral à hipófise que contém vasos e nervos importantes; pode influenciar o planejamento terapêutico."}, {"term": "Sela túrcica alargada", "meaning": "Alteração óssea que pode ocorrer com lesões de crescimento prolongado; não define sozinha o tipo ou a gravidade."}]}, {"id": "tratamentos", "title": "Tratamentos", "content": ["O tratamento é individualizado. Considera o tipo de tumor, tamanho, crescimento, hormônios produzidos, sintomas, visão, idade, condições clínicas e preferências informadas do paciente.", "As opções podem incluir acompanhamento periódico, medicamentos, cirurgia e, em situações selecionadas, radioterapia.", "Nem todo tumor precisa de cirurgia. Algumas lesões estáveis e sem critérios de intervenção podem ser acompanhadas com exames clínicos, hormonais e de imagem.", "O objetivo pode ser controlar a secreção hormonal, preservar ou recuperar a visão, aliviar a compressão, controlar o crescimento e preservar a função hipofisária."], "modalities": [{"name": "Acompanhamento", "explanation": "Pode ser indicado quando a lesão não apresenta sinais que exijam intervenção imediata. A frequência de ressonância, exames hormonais e campimetria é definida pela equipe."}, {"name": "Tratamento medicamentoso", "explanation": "É fundamental em muitos prolactinomas, frequentemente com cabergolina ou bromocriptina. Outros tipos podem exigir medicamentos específicos para controlar a produção hormonal ou repor hormônios deficientes. Não iniciar, suspender ou alterar medicamentos sem orientação."}, {"name": "Cirurgia transesfenoidal", "explanation": "É uma via frequentemente utilizada para acessar a hipófise pelo nariz e seio esfenoidal, com endoscópio ou microscópio. Pode ser indicada por compressão visual, crescimento, determinados tumores secretores ou outras características clínicas. Nem todos os casos são operáveis ou têm o mesmo objetivo cirúrgico."}, {"name": "Radioterapia", "explanation": "Pode ser considerada em casos selecionados, por exemplo, quando há tumor residual ou recorrente que não pode ser controlado adequadamente por outras opções. O efeito pode levar tempo e existe risco de deficiência hormonal tardia."}], "prolactinoma_note": "Em prolactinomas, agonistas dopaminérgicos são frequentemente o tratamento inicial. A cirurgia pode ser considerada em situações selecionadas, como intolerância ou resistência ao medicamento, complicações ou decisão compartilhada com equipe experiente."}, {"id": "cirurgia", "title": "Cirurgia transesfenoidal: o que saber", "content": ["A cirurgia transesfenoidal é realizada por uma via que passa pelas narinas e pelo seio esfenoidal até a região da hipófise. Em geral, não exige abertura do crânio pela via tradicional.", "O objetivo pode ser remover o tumor total ou parcialmente, aliviar a pressão sobre o quiasma e outras estruturas, obter tecido para análise ou controlar a secreção hormonal.", "A possibilidade de remoção completa depende de fatores como tamanho, consistência, extensão e invasão de estruturas próximas. Em alguns casos, pode ser necessário acompanhamento, medicamentos, nova cirurgia ou radioterapia.", "A equipe deve explicar benefícios, riscos, alternativas, possibilidade de deficiência hormonal, risco de vazamento de líquor, sangramento, infecção, alterações de sódio e outras complicações."], "before_surgery": ["Levar lista atualizada de medicamentos, alergias e doenças conhecidas.", "Confirmar com a equipe quais medicamentos devem ser mantidos ou suspensos; não interromper por conta própria.", "Seguir as orientações recebidas sobre jejum, exames, internação e acompanhante.", "Perguntar como serão monitorados os hormônios, o sódio, a visão e a possibilidade de diabetes insipidus.", "Perguntar quais sinais após a alta exigem contato com a equipe ou retorno imediato."], "after_surgery": ["Seguir rigorosamente as instruções específicas do cirurgião e do hospital.", "Comparecer às consultas e realizar exames hormonais, de sódio, de imagem e avaliações oftalmológicas quando solicitados.", "Não assoar o nariz, fazer esforço, levantar peso ou realizar atividades específicas sem autorização; as restrições e o tempo variam conforme a cirurgia e a orientação do serviço.", "Informar a equipe sobre saída persistente de líquido claro pelo nariz, febre, piora importante da dor de cabeça, alteração visual, vômitos persistentes, sede e urina excessivas ou redução importante da urina.", "Não iniciar ou alterar reposição hormonal sem orientação."], "urgent_postoperative_signs": "Procure avaliação urgente se houver perda ou piora súbita da visão, dor de cabeça súbita e intensa, confusão, desmaio, febre com piora clínica, vômitos persistentes, rigidez na nuca ou saída contínua de líquido claro pelo nariz, especialmente se acompanhado de gosto salgado. Siga também o plano de contato fornecido pelo hospital."}, {"id": "acompanhamento", "title": "Acompanhamento a longo prazo", "content": ["O acompanhamento pode continuar mesmo depois do tratamento ou da cirurgia, pois algumas lesões podem persistir, voltar a crescer ou apresentar alterações hormonais.", "A equipe pode solicitar ressonância magnética, exames hormonais, campimetria e avaliação oftalmológica em intervalos individualizados.", "Algumas pessoas precisam de reposição hormonal por tempo prolongado ou permanente. A necessidade deve ser confirmada por exames e avaliação médica.", "O paciente deve guardar laudos, imagens, resultados laboratoriais, lista de medicamentos e datas de consultas para facilitar a comparação ao longo do tempo."]}, {"id": "acolhimento", "title": "Acolhimento e apoio ao paciente", "content": ["Receber um diagnóstico de tumor na hipófise pode provocar medo, insegurança e muitas dúvidas. Cada pessoa vive esse processo de uma maneira.", "É válido pedir que a equipe explique novamente o diagnóstico, anotar perguntas, levar uma pessoa de confiança às consultas e solicitar apoio psicológico quando necessário.", "Não compare diretamente o seu caso com relatos de outras pessoas. Tumores com nomes ou tamanhos parecidos podem ter comportamentos, tratamentos e resultados diferentes.", "O aplicativo deve acolher sem prometer cura, prever resultados individuais ou minimizar sintomas."], "consultation_questions": ["Qual é o tipo provável da minha lesão e quais dados sustentam essa hipótese?", "Qual é o tamanho e onde ela está localizada?", "Existe contato ou compressão do quiasma óptico?", "Preciso de campimetria ou avaliação neuro-oftalmológica?", "Quais hormônios precisam ser avaliados?", "Por que foi indicado acompanhamento, medicamento ou cirurgia?", "Quais são os benefícios, riscos e alternativas?", "Quais sintomas exigem atendimento urgente?", "Qual será o plano de acompanhamento?"]}, {"id": "faq", "title": "Perguntas frequentes", "items": [{"q": "Todo tumor da hipófise é câncer?", "a": "Não. A maioria dos tumores hipofisários é benigna e não se espalha para outras partes do corpo. Mesmo benignos, podem causar alterações hormonais ou compressão de estruturas próximas."}, {"q": "Macroadenoma significa câncer?", "a": "Não. Macroadenoma descreve uma lesão com 10 mm ou mais. O termo se refere ao tamanho, não significa malignidade."}, {"q": "Todo macroadenoma precisa de cirurgia?", "a": "Não. A decisão depende do tipo, crescimento, hormônios, sintomas, visão, relação com estruturas próximas e avaliação da equipe."}, {"q": "Um tumor pode afetar a visão?", "a": "Sim, se crescer em direção aos nervos ópticos ou ao quiasma. Pode afetar o campo visual ou, em alguns casos, a acuidade visual. A avaliação oftalmológica é importante quando há proximidade ou sintomas."}, {"q": "Se o laudo diz que toca o quiasma, vou perder a visão?", "a": "Não é possível concluir isso apenas pela frase do laudo. É necessário avaliar imagens, exame visual, sintomas e evolução. Contato não é sinônimo automático de dano visual."}, {"q": "A ressonância mostra se o tumor produz hormônios?", "a": "A ressonância mostra características anatômicas, mas não determina sozinha a produção hormonal. São necessários exames laboratoriais e avaliação clínica."}, {"q": "Prolactinoma sempre precisa de cirurgia?", "a": "Não. Muitos prolactinomas são tratados inicialmente com medicamentos agonistas dopaminérgicos. A escolha depende do caso e deve ser feita pelo especialista."}, {"q": "Depois da cirurgia, o problema está resolvido?", "a": "Nem sempre. Pode ser necessário acompanhamento prolongado, reposição hormonal, medicamentos ou outros tratamentos."}, {"q": "A dor de cabeça significa que o tumor está crescendo?", "a": "Não necessariamente. Dor de cabeça tem muitas causas. Uma dor súbita, muito intensa ou associada a alterações visuais, vômitos ou sintomas neurológicos exige atendimento urgente."}, {"q": "Posso usar o aplicativo para interpretar meu exame?", "a": "O aplicativo pode explicar termos gerais e ajudar a preparar perguntas, mas não deve emitir diagnóstico nem substituir a análise das imagens e do laudo pelo médico."}]}], "ai_assistant": {"name": "Assistente Hipófise em Foco", "purpose": "Responder dúvidas educativas gerais sobre anatomia hipofisária, tipos de tumores, sintomas, exames, tratamentos, cirurgia e acompanhamento, usando exclusivamente a base de conhecimento revisada e fontes confiáveis.", "system_instructions": ["Responda em português brasileiro, com linguagem clara, respeitosa, acolhedora e sem alarmismo.", "Explique termos médicos e diferencie informação geral de orientação individual.", "Nunca diagnostique, estime prognóstico individual, interprete imagens como laudo médico ou recomende iniciar, suspender ou ajustar medicamentos.", "Nunca determine se uma pessoa precisa ou não de cirurgia. Explique que a decisão é individual e pertence à equipe assistente.", "Não solicite nome completo, CPF, endereço, número de prontuário, senha ou outros dados identificáveis.", "Se o usuário compartilhar exames, explique apenas o significado geral dos termos e recomende discutir o resultado com os profissionais responsáveis.", "Diante de perda súbita ou piora rápida da visão, dor de cabeça súbita e muito intensa, confusão, desmaio, vômitos persistentes ou outros sinais de emergência, oriente atendimento imediato e não prolongue a conversa com perguntas.", "Não invente referências. Quando a base não contiver resposta suficiente, diga que não há informação suficiente e recomende consulta profissional.", "Apresente as fontes utilizadas e a data de revisão do conteúdo quando possível."], "privacy_notice": "Antes de habilitar o assistente, informar quais dados são enviados ao provedor de IA, obter consentimento quando aplicável, minimizar dados pessoais e não enviar prontuários ou exames identificáveis sem base legal, proteção e consentimento apropriados.", "medical_review_required": true}, "references": [{"id": "ref-nichd", "organization": "Eunice Kennedy Shriver National Institute of Child Health and Human Development (NICHD)", "title": "Pituitary Tumors", "year": null, "url": "https://www.nichd.nih.gov/health/topics/pituitarytumors", "use": "Informações gerais sobre tumores, sintomas, diagnóstico e opções de tratamento."}, {"id": "ref-nci-overview", "organization": "National Cancer Institute (NCI)", "title": "Pituitary Tumors", "year": null, "url": "https://www.cancer.gov/types/pituitary", "use": "Visão geral, natureza geralmente benigna dos adenomas e informações para pacientes."}, {"id": "ref-nci-treatment", "organization": "National Cancer Institute (NCI)", "title": "Pituitary Tumors Treatment (PDQ®)", "year": null, "url": "https://www.cancer.gov/types/pituitary/hp/pituitary-treatment-pdq", "use": "Modalidades de tratamento e individualização da conduta."}, {"id": "ref-pituitary-consensus-2025", "organization": "Pituitary Society / Nature Reviews Endocrinology", "title": "Pituitary incidentaloma: a Pituitary Society international consensus guideline statement", "year": 2025, "url": "https://www.nature.com/articles/s41574-025-01134-8", "use": "Consenso internacional de 2025 sobre avaliação de lesões incidentais, ressonância, avaliação hormonal e visual, encaminhamentos e acompanhamento."}, {"id": "ref-prolactinoma-consensus", "organization": "Pituitary Society", "title": "Diagnosis and management of prolactin-secreting pituitary adenomas: a Pituitary Society international Consensus Statement", "year": 2023, "url": "https://pubmed.ncbi.nlm.nih.gov/37670148/", "use": "Diagnóstico e manejo de prolactinomas, tratamento medicamentoso, cirurgia e situações especiais."}, {"id": "ref-prolactinoma-patient", "organization": "Pituitary Society", "title": "Prolactinoma", "year": null, "url": "https://pituitarysociety.org/prolactinoma/", "use": "Material informativo para pacientes sobre prolactinoma e opções terapêuticas."}, {"id": "ref-endocrine-2011", "organization": "The Endocrine Society", "title": "Pituitary Incidentaloma: An Endocrine Society Clinical Practice Guideline", "year": 2011, "url": "https://www.endocrine.org/clinical-practice-guidelines/pituitary-incidentaloma", "use": "Avaliação hormonal, campo visual quando há proximidade com o quiasma e seguimento de lesões incidentais. Deve ser lida em conjunto com o consenso Pituitary Society de 2025."}], "editorial_and_safety": {"review_status": "Rascunho educativo inicial; requer revisão clínica antes da publicação pública.", "recommended_reviewers": ["endocrinologista com experiência em hipófise", "neurocirurgião com experiência em cirurgia hipofisária", "oftalmologista ou neuro-oftalmologista", "profissional responsável por privacidade e proteção de dados"], "update_policy": "Revisar periodicamente e sempre que novas diretrizes relevantes forem publicadas. Registrar responsável, data, versão e alterações.", "accessibility": "Usar frases curtas, contraste adequado, fontes legíveis, explicação de siglas, navegação simples e alternativa textual para imagens.", "privacy": "Evitar coleta de dados de saúde. Se houver cadastro, diário de sintomas, envio de exames ou comunidade, avaliar LGPD, consentimento, segurança, moderação, retenção e exclusão de dados antes de lançar."}};
+let selected=database.sections[0]?.id;
+const nav=document.getElementById('nav'),content=document.getElementById('content'),search=document.getElementById('search');
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderNav(){nav.innerHTML='';database.sections.forEach(sec=>{const b=document.createElement('button');b.textContent=sec.title;b.className=selected===sec.id?'active':'';b.onclick=()=>{selected=sec.id;search.value='';renderNav();renderSection(sec);};nav.appendChild(b);});}
+function renderSection(sec){
+ let out=`<article class="card"><h2>${esc(sec.title)}</h2>`;if(sec.summary)out+=`<p><strong>${esc(sec.summary)}</strong></p>`;
+ if(Array.isArray(sec.content))sec.content.forEach(x=>{if(typeof x==='string')out+=`<p>${esc(x)}</p>`;else if(x.name)out+=`<div class="item"><h3>${esc(x.name)}</h3>${x.hormone?`<p class="muted">Hormônio: ${esc(x.hormone)}</p>`:''}<p>${esc(x.explanation||'')}</p></div>`;else if(x.term)out+=`<div class="item"><span class="term">${esc(x.term)}:</span> ${esc(x.definition||x.meaning||'')}</div>`;});
+ else if(typeof sec.content==='string')out+=`<p>${esc(sec.content)}</p>`;
+ [['size_classification','Classificação por tamanho','name','definition'],['modalities','Opções de tratamento','name','explanation'],['hormone_tests','Exames hormonais','test','purpose'],['report_terms','Termos comuns nos laudos','term','meaning']].forEach(([k,t,n,d])=>{if(sec[k]){out+=`<h3>${t}</h3>`;sec[k].forEach(x=>out+=`<div class="item"><span class="term">${esc(x[n])}</span><p>${esc(x[d])}</p></div>`);}});
+ [['visual_effects','Efeitos possíveis na visão'],['before_surgery','Antes da cirurgia'],['after_surgery','Depois da cirurgia'],['consultation_questions','Perguntas para levar à consulta']].forEach(([k,t])=>{if(sec[k])out+=`<h3>${t}</h3><ul>${sec[k].map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;});
+ if(sec.urgent_postoperative_signs)out+=`<div class="notice">${esc(sec.urgent_postoperative_signs)}</div>`;if(sec.important_note)out+=`<div class="notice">${esc(sec.important_note)}</div>`;
+ if(sec.items)sec.items.forEach(x=>out+=`<div class="item"><strong>${esc(x.q)}</strong><p>${esc(x.a)}</p></div>`);
+ content.innerHTML=out+'</article>';
+}
+function normalizeSearch(value){return String(value||'').toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+function searchAll(q){
+ const terms=normalizeSearch(q).trim().split(/\\s+/).filter(t=>t.length>1);
+ const hits=database.sections.filter(s=>{
+  const text=normalizeSearch(JSON.stringify(s));
+  return terms.length>0 && terms.every(term=>text.includes(term));
+ });
+ content.innerHTML=hits.length?hits.map(s=>`<button class="card" style="width:100%;text-align:left;border:1px solid var(--line)" data-id="${esc(s.id)}"><strong>${esc(s.title)}</strong><p class="muted">${esc(s.summary||'Abrir conteúdo')}</p></button>`).join(''):'<div class="card">Nenhum conteúdo encontrado. Tente outro termo.</div>';
+ content.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{selected=b.dataset.id;search.value='';renderNav();renderSection(database.sections.find(s=>s.id===selected));});
+}
+renderNav();renderSection(database.sections[0]);search.addEventListener('input',()=>{const q=search.value.trim();if(q)searchAll(q);else renderSection(database.sections.find(s=>s.id===selected));});
+</script>
+<script>
+(function(){
+ const info={
+  hypothalamus:{title:"Hipotálamo",text:"Região do cérebro que ajuda a regular a hipófise por sinais nervosos e hormonais. Participa do controle da temperatura, sede, fome, sono e equilíbrio hormonal. Lesões próximas podem afetar essas funções."},
+  pituitary:{title:"Hipófise",text:"Pequena glândula localizada na base do cérebro, na sela túrcica. Produz ou libera hormônios que participam do controle de outras glândulas e de funções importantes do organismo. Tumores nessa região podem alterar a produção hormonal ou comprimir estruturas próximas."},
+  chiasm:{title:"Quiasma óptico",text:"Local onde parte das fibras dos nervos ópticos se cruza. Fica acima da hipófise. Um tumor que cresce para cima pode comprimi-lo e provocar alterações no campo visual, especialmente perda da visão periférica."},
+  nerves:{title:"Nervos ópticos",text:"Levam as informações visuais dos olhos até o cérebro. Alterações por compressão podem afetar a visão. A localização e o grau de comprometimento precisam ser avaliados por exames e profissionais especializados."},
+  cavernous:{title:"Seios cavernosos",text:"Espaços venosos localizados lateralmente à hipófise. Por eles passam estruturas importantes, incluindo nervos que controlam movimentos dos olhos e vasos sanguíneos. A extensão de um tumor para essa região pode influenciar sintomas e planejamento do tratamento."}
+ };
+ const panel=document.getElementById("anatomy-detail");
+ const buttons=[...document.querySelectorAll("#anatomy-controls button")];
+ const points=[...document.querySelectorAll(".anatomy-svg .hotspot")];
+ function choose(key){
+  const item=info[key];if(!item)return;
+  panel.innerHTML="<h3>"+item.title+"</h3><p>"+item.text+"</p>";
+  buttons.forEach(b=>b.classList.toggle("active",b.dataset.part===key));
+ }
+ buttons.forEach(b=>b.addEventListener("click",()=>choose(b.dataset.part)));
+ points.forEach(p=>{
+  p.addEventListener("click",()=>choose(p.dataset.part));
+  p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();choose(p.dataset.part);}});
+ });
+})();
+</script>
+
+
+<script>
+(function(){
+ const tumor=document.querySelector("#sim-tumor ellipse");
+ const arrow=document.getElementById("sim-arrow");
+ const desc=document.getElementById("sim-description");
+ const controls=[...document.querySelectorAll(".simulator button[data-state]")];
+ const states={
+  normal:{rx:0,ry:0,cx:245,cy:180,arrow:"",title:"Sem aumento tumoral ilustrado",text:"O desenho mostra a hipófise sem uma massa aumentada. Isso é apenas uma referência visual educativa; não substitui a avaliação de uma ressonância."},
+  growth:{rx:43,ry:37,cx:245,cy:157,arrow:"M245 154 L245 117",title:"Crescimento superior ilustrado",text:"Uma lesão pode aumentar de volume e crescer em direção às estruturas acima da hipófise. O desenho representa uma possibilidade, não o comportamento de todos os tumores."},
+  contact:{rx:55,ry:47,cx:245,cy:133,arrow:"M245 125 L245 112",title:"Contato ou compressão do quiasma ilustrados",text:"Quando a lesão alcança e comprime o quiasma óptico, pode ocorrer alteração do campo visual, frequentemente com redução da visão periférica. A presença e a intensidade da alteração precisam ser avaliadas individualmente."}
+ };
+ function select(key){
+  const s=states[key];tumor.setAttribute("cx",s.cx);tumor.setAttribute("cy",s.cy);tumor.setAttribute("rx",s.rx);tumor.setAttribute("ry",s.ry);arrow.setAttribute("d",s.arrow);
+  desc.innerHTML="<strong>"+s.title+"</strong><p>"+s.text+"</p>";
+  controls.forEach(b=>b.classList.toggle("active",b.dataset.state===key));
+ }
+ controls.forEach(b=>b.addEventListener("click",()=>select(b.dataset.state)));
+})();
+</script>
+
+
+<script>
+(function(){
+const cats={
+geral:[["O que é a hipófise?","hipofise"],["Todo tumor da hipófise é câncer?","faq0"],["O que significa macroadenoma?","faq1"],["Todo macroadenoma precisa de cirurgia?","faq2"]],
+visao:[["Um tumor pode afetar a visão?","faq3"],["O que é o quiasma óptico?","chiasm"],["Contato com o quiasma significa que vou perder a visão?","faq4"],["Quando devo procurar atendimento urgente?","emergency"]],
+exames:[["Como é feito o diagnóstico?","diagnostico"],["Para que serve a campimetria?","campimetria"],["A ressonância mostra se o tumor produz hormônios?","faq5"],["O que significa extensão suprasselar?","suprasselar"]],
+tratamento:[["Quais são os tratamentos possíveis?","tratamentos"],["Prolactinoma sempre precisa de cirurgia?","faq6"],["O que é acompanhamento?","acompanhamento"]],
+cirurgia:[["Como é feita a cirurgia transesfenoidal?","cirurgia"],["O que devo perguntar antes da cirurgia?","before"],["Quais sinais exigem atenção depois da cirurgia?","after"]],
+apoio:[["Como me preparar para a consulta?","questions"],["É normal sentir medo após o diagnóstico?","acolhimento"],["Como usar este aplicativo?","howto"]]
+};
+const $=id=>document.getElementById(id);
+const catBox=$("assistant-categories"),qBox=$("assistant-questions"),answerBox=$("assistant-answer"),searchBox=$("assistant-search"),resultsBox=$("assistant-results");
+if(!catBox||!qBox||!answerBox||!searchBox||!resultsBox||typeof database==="undefined")return;
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sec=id=>database.sections.find(s=>s.id===id);
+function show(title,body){answerBox.innerHTML="<h3>"+esc(title)+"</h3><div>"+body+"</div><p class='assistant-small'>Informação geral. A interpretação do caso individual deve ser feita pela equipe de saúde.</p>";}
+function showSection(id){
+const s=sec(id);if(!s){show("Informação","Não há resposta disponível.");return;}
+let p=[];if(s.summary)p.push("<strong>"+esc(s.summary)+"</strong>");
+if(Array.isArray(s.content))s.content.forEach(x=>{if(typeof x==="string")p.push(esc(x));else if(x.explanation)p.push("<strong>"+esc(x.name||"")+"</strong> "+esc(x.explanation));});
+if(typeof s.content==="string")p.push(esc(s.content));
+show(s.title,p.join("</p><p>")||"Consulte a seção correspondente no aplicativo.");
+}
+function answer(key,label){
+if(key.startsWith("faq")){let f=sec("faq"),x=f&&f.items[Number(key.slice(3))];show(label,x?esc(x.a):"Resposta não disponível.");}
+else if(key==="chiasm")show("Quiasma óptico","É a região onde parte das fibras dos nervos ópticos se cruza, localizada acima da hipófise. Uma lesão que cresce para cima pode tocar ou comprimir essa estrutura e causar alterações no campo visual. Isso não acontece em todos os tumores.");
+else if(key==="campimetria")show("Campimetria","A campimetria avalia o campo visual, incluindo áreas periféricas. Pode ser solicitada quando uma lesão está próxima dos nervos ópticos ou do quiasma, ou quando existem queixas visuais.");
+else if(key==="suprasselar"){let x=sec("diagnostico").report_terms.find(x=>x.term==="Extensão suprasselar");show("Extensão suprasselar",esc(x.meaning));}
+else if(key==="emergency")show(database.emergency_alert.title,esc(database.emergency_alert.text)+" "+esc(database.emergency_alert.action));
+else if(["before","after","questions"].includes(key)){
+let s=key==="questions"?sec("acolhimento"):sec("cirurgia");
+let arr=s[key==="before"?"before_surgery":key==="after"?"after_surgery":"consultation_questions"]||[];
+let body="<ul>"+arr.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";
+if(key==="after" && s.urgent_postoperative_signs){
+body+="<div class='notice'><strong>Sinais de alerta — procure avaliação urgente:</strong> "+esc(s.urgent_postoperative_signs)+"</div>";
+}
+show(label,body);
+}
+else if(key==="howto")show("Como usar","Escolha uma categoria, toque em uma pergunta e leia a resposta. Para localizar um termo, use o campo de pesquisa. O assistente utiliza respostas previamente organizadas e não conversa com IA.");
+else showSection(key);
+}
+function render(cat){qBox.innerHTML="";cats[cat].forEach(([label,key])=>{let b=document.createElement("button");b.type="button";b.textContent=label;b.onclick=()=>answer(key,label);qBox.appendChild(b);});catBox.querySelectorAll("button").forEach(b=>b.classList.toggle("active",b.dataset.category===cat));}
+catBox.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>render(b.dataset.category)));
+function searchable(s){let a=[s.title||"",s.summary||""];if(Array.isArray(s.content))s.content.forEach(x=>{if(typeof x==="string")a.push(x);else a.push(x.name||"",x.explanation||"",x.term||"",x.definition||"");});["size_classification","modalities","hormone_tests","report_terms","visual_effects","before_surgery","after_surgery","consultation_questions","items"].forEach(k=>{if(Array.isArray(s[k]))s[k].forEach(x=>{if(typeof x==="string")a.push(x);else Object.values(x).forEach(v=>{if(typeof v==="string")a.push(v);});});});return a.join(" ");}
+function normalizeSearch(value){
+return String(value||"").toLocaleLowerCase("pt-BR").normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+searchBox.addEventListener("input",()=>{
+let q=normalizeSearch(searchBox.value).trim();
+resultsBox.innerHTML="";
+if(!q)return;
+let terms=q.split(/\s+/).filter(t=>t.length>1);
+let found=database.sections.filter(s=>{
+let text=normalizeSearch(searchable(s));
+return terms.every(term=>text.includes(term));
+});
+if(!found.length){resultsBox.innerHTML="<p class='muted'>Nenhum resultado encontrado. Tente palavras mais curtas, como visão, quiasma ou prolactina.</p>";return;}
+found.forEach(s=>{
+let d=document.createElement("div");d.className="item";
+let b=document.createElement("button");b.type="button";b.textContent="Abrir: "+s.title;b.onclick=()=>showSection(s.id);
+let p=document.createElement("p");p.className="muted";p.textContent=s.summary||"Conteúdo relacionado à pesquisa.";
+d.append(b,p);resultsBox.appendChild(d);
+});
+});
+render("geral");
+})();
+</script>
+
+</body></html>
